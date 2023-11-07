@@ -1,0 +1,44 @@
+* {
+    color: white;
+    background-color: rgb(60, 62, 68);
+}
+
+#mainContainer {
+    position: relative;
+}
+
+#library {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: repeat(auto-fit, 300px);
+    gap: 10px;
+}
+
+#library > * {
+    background-color: rgb(44, 41, 48);
+}
+
+.book {
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+#newBook {
+    font-size: 150px;
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+#addBook {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 100px;
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,50%);
+    margin: auto;
+    border: 1px solid black;
+}
