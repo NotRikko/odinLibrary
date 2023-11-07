@@ -4,26 +4,49 @@ const library = document.getElementById("library");
 const newBookBtn = document.getElementById("newBook");
 const bookForm = document.getElementById("addBook");
 
-function Book(title, author, pages) {
+function Book(title, author, pages, completion) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.completion = completion;
 }
 
 
 
 function displayBook(Book, index) {
-    let div = document.createElement("div");
-    div.classList.add("book");
-    div.dataset.bookIndex = index;
-    let text = document.createTextNode(Book.title);
+    let bookDiv = document.createElement("div");
+    bookDiv.classList.add("book");
+    bookDiv.dataset.bookIndex = index;
+
+    let bookTitle = document.createElement("div");
+    bookTitle.textContent = Book.title;
+
+    let bookAuthor = document.createElement("div");
+    bookAuthor.textContent = Book.author;
+
+    let bookPages = document.createElement("div");
+    bookPages.textContent = Book.pages + " " + "Pages";
+
+    let bookCompletion = document.createElement("div");
+    if (Book.completion == true) {
+        bookCompletion.textContent = "Completed"
+    }
+    else {
+        bookCompletion.textContent = "Unfinished";
+    };
+
+
     let removeButton = document.createElement("button");
     removeButton.textContent = "X";
     removeButton.classList.add("remove");
     removeButton.addEventListener("click", removeBook);
-    div.appendChild(text);
-    div.appendChild(removeButton);
-    library.appendChild(div);
+
+    bookDiv.appendChild(bookTitle);
+    bookDiv.appendChild(bookAuthor);
+    bookDiv.appendChild(bookPages);
+    bookDiv.appendChild(bookCompletion);
+    bookDiv.appendChild(removeButton);
+    library.appendChild(bookDiv);
 }
 
 function removeBook(event) {
@@ -39,8 +62,8 @@ function removeBook(event) {
 
 
 function loadDummyBooks() {
-    const book1 = new Book("JJK", "Gege", "100");
-    const book2 = new Book("Game of Thrones", "George R.R Martin", "500");
+    const book1 = new Book("JJK", "Gege", "100", true);
+    const book2 = new Book("Game of Thrones", "George R.R Martin", "500", true);
     myLibrary.push(book1, book2);
     console.log(myLibrary);
     myLibrary.forEach(displayBook);
@@ -54,11 +77,17 @@ const form = document.getElementById("addBook");
 const bookTitle = form.elements["title"];
 const bookAuthor = form.elements["author"];
 const bookPages = form.elements["pages"];
+const bookCheckBox = form.elements["completed"];
 const bookSubmit = form.elements["submitBook"];
+let bookCompletion = false;
+
 
 function addBookToLibrary() {
     event.preventDefault();
-    let newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value);
+    if (bookCheckBox.checked) {
+        bookCompletion = true;
+    };
+    let newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookCompletion);
     myLibrary.push(newBook);
     displayBook(newBook);
     console.log(myLibrary);
