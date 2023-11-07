@@ -1,6 +1,6 @@
 * {
-    color: white;
-    background-color: rgb(60, 62, 68);
+    color: rgb(255, 255, 255);
+    background-color: rgb(37, 37, 37);
 }
 
 #mainContainer {
@@ -19,8 +19,23 @@
 }
 
 .book {
+    font-size: 20px;
     border: 5px solid rgb(255, 255, 255);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.remove {
+    color: black;
+    font-size: 20px;
+    background-color: rgb(255, 255, 255);
+    width: 35px;
+    height: 35px;
+    padding: 0px;
+    margin: auto;
 }
 
 #newBook {
@@ -33,6 +48,7 @@
     visibility: hidden;
     display: flex;
     flex-direction: column;
+    gap: 3px;
     padding: 100px;
     z-index: 5;
     position: absolute;
@@ -40,5 +56,14 @@
     left: 50%;
     transform: translate(-50%,50%);
     margin: auto;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+form input[type=text] {
+    background-color: white;
+    color: black;
+}
+
+form label[for=read] {
+    align-self: center;
 }
