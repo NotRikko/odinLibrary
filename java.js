@@ -28,7 +28,8 @@ function displayBook(Book, index) {
     bookPages.textContent = Book.pages + " " + "Pages";
 
     let bookCompletion = document.createElement("div");
-    if (Book.completion == true) {
+    bookCompletion.classList.add("readDiv");
+    if (Book.completion) {
         bookCompletion.textContent = "Completed"
     }
     else {
@@ -41,10 +42,16 @@ function displayBook(Book, index) {
     removeButton.classList.add("remove");
     removeButton.addEventListener("click", removeBook);
 
+    let readButton = document.createElement("button");
+    readButton.textContent = "Read";
+    readButton.classList.add("completeButton");
+    readButton.addEventListener("click", completeBook);
+
     bookDiv.appendChild(bookTitle);
     bookDiv.appendChild(bookAuthor);
     bookDiv.appendChild(bookPages);
     bookDiv.appendChild(bookCompletion);
+    bookDiv.appendChild(readButton);
     bookDiv.appendChild(removeButton);
     library.appendChild(bookDiv);
 }
@@ -60,6 +67,25 @@ function removeBook(event) {
   
 }
 
+function completeBook(event) {
+    const readStatus = event.target.closest(".book");
+    if(readStatus) {
+        const completedBookIndex = readStatus.dataset.bookIndex;
+        const bookToComplete = myLibrary[completedBookIndex]
+
+        if(bookToComplete) {
+            if(bookToComplete.completion) {
+                readStatus.querySelector(".readDiv").textContent = "Unfinished";
+                bookToComplete.completion = false;
+            }
+            else {
+                readStatus.querySelector(".readDiv").textContent = "Completed";
+                bookToComplete.completion = true;
+            }
+        }
+    }
+}
+    
 
 function loadDummyBooks() {
     const book1 = new Book("JJK", "Gege", "100", true);
@@ -79,17 +105,21 @@ const bookAuthor = form.elements["author"];
 const bookPages = form.elements["pages"];
 const bookCheckBox = form.elements["completed"];
 const bookSubmit = form.elements["submitBook"];
-let bookCompletion = false;
+let bookCompletion;
 
 
 function addBookToLibrary() {
     event.preventDefault();
-    if (bookCheckBox.checked) {
-        bookCompletion = true;
-    };
     let newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookCompletion);
+    if (bookCheckBox.checked) {
+        newBook.completion = true;
+    }
+    else {
+        newBook.completion = false;
+    };
     myLibrary.push(newBook);
-    displayBook(newBook);
+    const newIndex = myLibrary.indexOf(newBook);
+    displayBook(newBook, newIndex);
     console.log(myLibrary);
     bookForm.style.visibility = "hidden";
     form.reset();
